@@ -285,16 +285,13 @@ const Index = () => {
                 <span className="badge-live text-[8px]">
                   <span className="live-dot" /> LIVE NOW
                 </span>
-                <span className="text-neutral-400 text-[9px] sm:text-[10px] font-bold tracking-widest uppercase">
-                  IPL 2026
-                </span>
               </div>
               <h2 className="text-xl md:text-5xl font-black tracking-tighter leading-none mb-1 md:mb-3">
                 EVERY MATCH.{" "}
                 <span className="text-red-500">EVERY LANGUAGE.</span>
               </h2>
               <p className="hidden md:block text-neutral-400 text-[11px] md:text-sm font-medium max-w-md">
-                Star Sports, Willow &amp; official IPL feeds in Hindi, English, Tamil,
+                Star Sports, Willow &amp; official feeds in Hindi, English, Tamil,
                 Telugu, Kannada, Malayalam, Bengali, Punjabi, Marathi, Gujarati and
                 more — in HD and 4K.
               </p>
@@ -345,18 +342,20 @@ const Index = () => {
             <div className="text-center py-20 text-red-500 font-bold">
               Failed to load playlist: {loadError}
             </div>
-          ) : isSearching ? (
-            /* ── Search results flat grid ── */
+          ) : (
+            /* ── All channels flat grid, 5 per row ── */
             <section>
-              <div className="flex items-center gap-4 mb-5">
-                <h4 className="text-base sm:text-xl font-extrabold tracking-tighter text-red-500 uppercase italic">
-                  Search Results
-                </h4>
-                <div className="h-px flex-1 bg-red-500/10" />
-                <span className="text-[9px] font-bold text-neutral-600 tracking-widest">
-                  {filtered.length} FOUND
-                </span>
-              </div>
+              {isSearching && (
+                <div className="flex items-center gap-4 mb-5">
+                  <h4 className="text-base sm:text-xl font-extrabold tracking-tighter text-red-500 uppercase italic">
+                    Search Results
+                  </h4>
+                  <div className="h-px flex-1 bg-red-500/10" />
+                  <span className="text-[9px] font-bold text-neutral-600 tracking-widest">
+                    {filtered.length} FOUND
+                  </span>
+                </div>
+              )}
               {filtered.length === 0 ? (
                 <div className="py-16 text-center border-4 border-dashed border-white/5 rounded-[32px]">
                   <p className="text-neutral-600 font-black uppercase tracking-widest text-xs">
@@ -364,7 +363,7 @@ const Index = () => {
                   </p>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
                   {filtered.map((c) => (
                     <ChannelMiniCard
                       key={c.id}
@@ -376,37 +375,6 @@ const Index = () => {
                 </div>
               )}
             </section>
-          ) : (
-            /* ── Channels grouped by group (all groups, or filtered to active chip) ── */
-            <>
-              {(activeGroup ? [activeGroup] : groups).map((g) => {
-                  const gChannels = channels.filter((c) => c.group === g);
-                  if (gChannels.length === 0) return null;
-                  return (
-                    <section key={g}>
-                      <div className="flex items-center gap-4 mb-4">
-                        <h4 className="text-base sm:text-xl font-extrabold tracking-tighter text-neutral-100 uppercase">
-                          {g}
-                        </h4>
-                        <div className="h-px flex-1 bg-white/5" />
-                        <span className="text-[9px] font-bold text-neutral-600 tracking-widest">
-                          {gChannels.length} CHANNELS
-                        </span>
-                      </div>
-                      <div className="flex snap-row gap-4 pb-5 no-scrollbar overflow-x-auto">
-                        {gChannels.map((c) => (
-                          <div key={c.id} className="w-40 sm:w-48 shrink-0">
-                            <ChannelMiniCard
-                              channel={c}
-                              onPlay={handlePlay}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </section>
-                  );
-                })}
-            </>
           )}
         </div>
       </main>
@@ -417,7 +385,7 @@ const Index = () => {
           <span className="text-red-500">Zestyy</span><span className="text-white">TV</span>
         </span>
         <p className="text-sm">
-          IPL 2026 · Streams from third-party playlist · Personal use only
+          Streams from third-party playlist · Personal use only
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <a
